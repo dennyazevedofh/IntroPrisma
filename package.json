@@ -2,7 +2,7 @@
   "name": "node-api-base",
   "version": "1.0.0",
   "scripts": {
-    "dev": "nodemon --watch src --ext ts,tsx--exec tsxsrc/server.ts"
+    "dev": "nodemon --watch src --ext ts,tsx --exec tsx src/server.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.19.2",
