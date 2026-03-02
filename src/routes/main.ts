@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { prisma } from '../libs/prisma';
+import { createUser } from '../services/user';
 
 export const mainRouter = Router();
 
@@ -12,12 +12,14 @@ mainRouter.get('/test', (req, res) => {
 });
 
 mainRouter.post('/user', async (req, res) => {
-    const user = await prisma.user.create({
-        data: {
-            name: 'Billy Bob',
-            email: 'billy.bob@example.com'
-        }
+    //Validar os dados de entrada
+    const user = await createUser({
+        name: 'Peter Bob',
+        email: 'peter.bob@example.com'
     });
-
-    res.json(user);
+    if (user) {
+        res.status(201).json({ user });
+    } else {
+        res.status(400).json({ error: 'Email already exists' });
+    }
 });
