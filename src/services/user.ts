@@ -64,3 +64,31 @@ export const getUserByEmail = async (email: string) => {
 		return false;
 	}
 }
+
+export const getUserByFields = async () => {
+	try {
+		const page = 2;
+		const pageSize = 10;
+		return await prisma.user.findMany({
+			skip: (page - 1) * pageSize,
+			take: pageSize,
+			where: {
+				posts: {
+					some: {
+						title: {
+							contains: 'Post 1'
+						}
+					}
+				}
+			},
+			select: {
+				id: true,
+				name: true,
+				status: true
+			}
+		})
+	} catch (error) {
+		console.error('Error fetching user by email:', error);
+		return false;
+	}
+}

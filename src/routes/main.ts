@@ -3,7 +3,8 @@ import {
     createUser,
     createUsers,
     getAllUsers,
-    getUserByEmail
+    getUserByEmail,
+    getUserByFields
 } from '../services/user';
 
 export const mainRouter = Router();
@@ -51,6 +52,15 @@ mainRouter.get('/users', async (req, res) => {
 
 mainRouter.get('/user', async (req, res) => {
     const user = await getUserByEmail('wilder.bill@example.com');
+    if (user) {
+        res.json({ user });
+    } else {
+        res.status(404).json({ error: 'User not found' });
+    }
+});
+
+mainRouter.get('/user2', async (req, res) => {
+    const user = await getUserByFields();
     if (user) {
         res.json({ user });
     } else {
